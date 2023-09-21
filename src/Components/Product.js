@@ -1,0 +1,63 @@
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import classes from "./Products.module.css";
+
+const Product = () => {
+  const productsArr = [
+    {
+      title: "Album 1",
+      price: 100,
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
+    },
+    {
+      title: "Album 2",
+      price: 50,
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
+    },
+    {
+      title: "Album 3",
+      price: 70,
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
+    },
+    {
+      title: "Album 4",
+      price: 100,
+      imageUrl:
+        "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
+    },
+  ];
+
+  return (
+    <Container className="mt-5">
+      {productsArr.map(
+        (item, index) =>
+          index % 2 === 0 && (
+            <Row key={index} className={`mb-3 ${classes["no-border"]}`}>
+              {productsArr.slice(index, index + 2).map((product, i) => (
+                <Col key={i} className="mt-3">
+                  <Card>
+                    <Card.Body className="d-flex flex-column align-items-center">
+                      <h5 className="text-center">{product.title}</h5>
+                      <Card.Img
+                        variant="top"
+                        src={product.imageUrl}
+                        style={{ width: "200px", height: "200px" }}
+                      />
+                      <div className="mt-auto">
+                        <p className="mb-0">₹{product.price}</p>
+                        <Button variant="primary">ADD TO CART</Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          )
+      )}
+    </Container>
+  );
+};
+
+export default Product;
