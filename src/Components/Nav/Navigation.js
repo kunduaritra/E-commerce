@@ -1,11 +1,25 @@
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Navbar, Nav, Button } from "react-bootstrap";
+import Cart from "../Cart/Cart";
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const [isCartVisible, setIsCartVisible] = useState(false);
+  const toggleCart = () => {
+    setIsCartVisible(!isCartVisible);
+  };
   return (
     <>
       <Navbar bg="dark" expand="sm" variant="dark">
         <Container>
-          {/* <Navbar.Brand href="/">Album</Navbar.Brand> */}
+          <Button
+            variant="outline-primary"
+            className="me-3 md-auto text-white"
+            onClick={toggleCart}
+          >
+            Cart
+            <sup className="text-white">0</sup>
+          </Button>
+          {isCartVisible && <Cart />}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">

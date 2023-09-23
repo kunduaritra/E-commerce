@@ -34,20 +34,23 @@ const Product = () => {
       {productsArr.map(
         (item, index) =>
           index % 2 === 0 && (
-            <Row key={index} className={`mb-3 ${classes["no-border"]}`}>
+            <Row key={index}>
               {productsArr.slice(index, index + 2).map((product, i) => (
                 <Col key={i} className="mt-3">
-                  <Card>
+                  <Card key={i} className={`mt-3 ${classes["card-no-border"]}`}>
                     <Card.Body className="d-flex flex-column align-items-center">
                       <h5 className="text-center">{product.title}</h5>
                       <Card.Img
                         variant="top"
+                        S
                         src={product.imageUrl}
                         style={{ width: "200px", height: "200px" }}
                       />
-                      <div className="mt-auto">
-                        <p className="mb-0">₹{product.price}</p>
-                        <Button variant="primary">ADD TO CART</Button>
+                      <div className="mt-2" style={{ display: "flex" }}>
+                        <p className="mb-0 me-5">₹{product.price}</p>
+                        <Button variant="primary" className="btn-sm">
+                          ADD TO CART
+                        </Button>
                       </div>
                     </Card.Body>
                   </Card>

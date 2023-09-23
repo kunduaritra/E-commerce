@@ -1,0 +1,17 @@
+.cart-container {
+  position: relative;
+  padding-left: 0;
+}
+
+.cart {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 380px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  padding: 10px;
+  z-index: 1;
+}
