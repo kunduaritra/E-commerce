@@ -11,12 +11,6 @@ function Cart() {
     setIsCartVisible(false);
   };
 
-  // const removeElement = (index) => {
-  //   setCartElements((prevCartElements) =>
-  //     prevCartElements.filter((_, i) => i !== index)
-  //   );
-  // };
-
   return (
     <>
       {isCartVisible && (
@@ -36,6 +30,7 @@ function Cart() {
             <h3 className="text-right">
               Grand Total: <small>₹100</small>
             </h3>
+            {console.log("cart cntx", cartCntx)}
             {cartCntx.items.map((item, index) => (
               <div key={index} className="cart-item">
                 <Row className="d-flex justify-content-center align-items-center mt-3 colStyle">

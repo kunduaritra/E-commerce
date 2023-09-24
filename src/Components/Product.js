@@ -43,12 +43,11 @@ const Product = () => {
             <Row key={index}>
               {productsArr.slice(index, index + 2).map((product, i) => (
                 <Col key={i} className="mt-3">
-                  <Card key={i} className={`mt-3 ${classes["card-no-border"]}`}>
+                  <Card key={i} className={`mt-3 ${classes.styleborder1}`}>
                     <Card.Body className="d-flex flex-column align-items-center">
                       <h5 className="text-center">{product.title}</h5>
                       <Card.Img
                         variant="top"
-                        S
                         src={product.imageUrl}
                         style={{ width: "200px", height: "200px" }}
                       />
