@@ -1,42 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import CartContext from "../../store/cart-context";
 import "./Cart.css";
 
 function Cart() {
+  const cartCntx = useContext(CartContext);
   const [isCartVisible, setIsCartVisible] = useState(true);
-  const [cartElements, setCartElements] = useState([
-    {
-      title: "Colors",
-      price: 100,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-      quantity: 2,
-    },
-    {
-      title: "Black and white Colors",
-      price: 50,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-      quantity: 3,
-    },
-    {
-      title: "Yellow and Black Colors",
-      price: 70,
-      imageUrl:
-        "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-      quantity: 1,
-    },
-  ]);
 
   const toggleCart = () => {
     setIsCartVisible(false);
   };
 
-  const removeElement = (index) => {
-    setCartElements((prevCartElements) =>
-      prevCartElements.filter((_, i) => i !== index)
-    );
-  };
+  // const removeElement = (index) => {
+  //   setCartElements((prevCartElements) =>
+  //     prevCartElements.filter((_, i) => i !== index)
+  //   );
+  // };
 
   return (
     <>
@@ -44,19 +23,22 @@ function Cart() {
         <Container className="cart-container mt-5">
           <div className="cart">
             <Row>
-              <Col>
+              <Col className="text-left">
                 <h3>Items</h3>
               </Col>
-              <Col>
+              <Col className="text-right">
                 <Button onClick={toggleCart} variant="danger">
                   X
                 </Button>
               </Col>
             </Row>
             <hr />
-            {cartElements.map((item, index) => (
+            <h3 className="text-right">
+              Grand Total: <small>₹100</small>
+            </h3>
+            {cartCntx.items.map((item, index) => (
               <div key={index} className="cart-item">
-                <Row className="d-flex justify-content-center align-items-center mt-3">
+                <Row className="d-flex justify-content-center align-items-center mt-3 colStyle">
                   <Col>
                     <img
                       src={item.imageUrl}
@@ -81,7 +63,7 @@ function Cart() {
                       <Button
                         className="btn-sm"
                         variant="outline-danger"
-                        onClick={() => removeElement(index)} // Pass a function to onClick
+                        onClick={() => {}}
                       >
                         -
                       </Button>

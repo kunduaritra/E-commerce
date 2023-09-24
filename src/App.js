@@ -2,10 +2,11 @@ import Container from "react-bootstrap/Container";
 import Navigation from "./Components/Nav/Navigation";
 import Product from "./Components/Product";
 import Footer from "./Components/Footer/Footer";
+import CartProvider from "./store/CartProvider";
 
 let App = () => {
   return (
-    <>
+    <CartProvider>
       <Navigation />
       <Container
         fluid
@@ -34,7 +35,7 @@ let App = () => {
       </Container>
       <Product />
       <Footer />
-    </>
+    </CartProvider>
   );
 };
 

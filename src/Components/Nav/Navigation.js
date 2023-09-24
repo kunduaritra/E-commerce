@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Container, Navbar, Nav, Button } from "react-bootstrap";
 import Cart from "../Cart/Cart";
+import CartContext from "../../store/cart-context";
 
 const Navigation = (props) => {
+  const cartCntx = useContext(CartContext);
   const [isCartVisible, setIsCartVisible] = useState(false);
   const toggleCart = () => {
     setIsCartVisible(!isCartVisible);
@@ -17,7 +19,7 @@ const Navigation = (props) => {
             onClick={toggleCart}
           >
             Cart
-            <sup className="text-white">0</sup>
+            <sup className="text-white">{cartCntx.items.length}</sup>
           </Button>
           {isCartVisible && <Cart />}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

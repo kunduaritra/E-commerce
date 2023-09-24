@@ -1,7 +1,10 @@
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import classes from "./Products.module.css";
+import { useContext } from "react";
+import CartContext from "../store/cart-context";
 
 const Product = () => {
+  const cartCntx = useContext(CartContext);
   const productsArr = [
     {
       title: "Album 1",
@@ -28,6 +31,9 @@ const Product = () => {
         "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
     },
   ];
+  const addItemToCarthandler = (item) => {
+    cartCntx.addItems(item);
+  };
 
   return (
     <Container className="mt-5">
@@ -48,7 +54,11 @@ const Product = () => {
                       />
                       <div className="mt-2" style={{ display: "flex" }}>
                         <p className="mb-0 me-5">₹{product.price}</p>
-                        <Button variant="primary" className="btn-sm">
+                        <Button
+                          variant="primary"
+                          className="btn-sm"
+                          onClick={() => addItemToCarthandler(product)}
+                        >
                           ADD TO CART
                         </Button>
                       </div>

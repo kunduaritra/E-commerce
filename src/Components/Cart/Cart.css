@@ -15,3 +15,8 @@
   padding: 10px;
   z-index: 1;
 }
+
+.colStyle {
+  border-bottom: "1px solid grey";
+  padding: "10px";
+}
