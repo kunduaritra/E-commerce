@@ -1,0 +1,6 @@
+.hide {
+  text-decoration: none;
+  display: block;
+  overflow: hidden;
+  color: white;
+}

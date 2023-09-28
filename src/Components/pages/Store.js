@@ -1,6 +1,5 @@
 import Container from "react-bootstrap/Container";
 import Product from "../Product";
-import Footer from "../Footer/Footer";
 import CartProvider from "../../store/CartProvider";
 
 const StorePage = () => {
@@ -19,7 +18,7 @@ const StorePage = () => {
         <h1 className="mt-3 mb-20">Music</h1>
       </Container>
       <Product />
-      <Footer />
+      {/* <Footer /> */}
     </CartProvider>
   );
 };

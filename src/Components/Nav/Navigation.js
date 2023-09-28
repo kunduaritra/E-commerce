@@ -3,6 +3,7 @@ import { Container, Navbar, Nav, Button } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import CartContext from "../../store/cart-context";
 import { Link } from "react-router-dom";
+import "./Navigation.css";
 
 const Navigation = (props) => {
   const cartCntx = useContext(CartContext);
@@ -28,13 +29,15 @@ const Navigation = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Link to="/home" className="me-5">
+              <Link to="/home" className="me-5 hide">
                 Home
               </Link>
-              <Link to="/" className="me-5">
+              <Link to="/" className="me-5 hide">
                 Store
               </Link>
-              <Link to="/about">About</Link>
+              <Link to="/about" className="hide">
+                About
+              </Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

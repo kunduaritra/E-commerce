@@ -1,43 +1,28 @@
+import { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 const HomePage = () => {
-  const events = [
-    {
-      date: "JUL 16",
-      location: "DETROIT, MI",
-      venue: "DTE ENERGY MUSIC THEATRE",
-      ticketLink: "BUY TICKETS",
-    },
-    {
-      date: "JUL 19",
-      location: "TORONTO, ON",
-      venue: "BUDWEISER STAGE",
-      ticketLink: "BUY TICKETS",
-    },
-    {
-      date: "JUL 22",
-      location: "BRISTOW, VA",
-      venue: "JIGGY LUBE LIVE",
-      ticketLink: "BUY TICKETS",
-    },
-    {
-      date: "JUL 29",
-      location: "PHOENIX, AZ",
-      venue: "AK-CHIN PAVILION",
-      ticketLink: "BUY TICKETS",
-    },
-    {
-      date: "AUG 2",
-      location: "LAS VEGAS, NV",
-      venue: "T-MOBILE ARENA",
-      ticketLink: "BUY TICKETS",
-    },
-    {
-      date: "AUG 7",
-      location: "CONCORD, CA",
-      venue: "CONCORD PAVILION",
-      ticketLink: "BUY TICKETS",
-    },
-  ];
+  const [movies, setMovies] = useState([]);
+  async function fetchMovieHandler() {
+    try {
+      const response = await fetch("https://swapi.dev/api/films/");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      const transformedMovies = data.results.map((movieData) => {
+        return {
+          id: movieData.episode_id,
+          title: movieData.title,
+          openingCrawl: movieData.opening_crawl,
+          releaseDate: movieData.release_date,
+        };
+      });
+      setMovies(transformedMovies);
+    } catch (error) {
+      console.log("error--> ", error);
+    }
+  }
+
   return (
     <>
       <Container
@@ -51,9 +36,17 @@ const HomePage = () => {
           fontWeight: "bold",
         }}
       >
-        <Button variant="outline-info" size="lg">
+        <Button size="lg" class="btn square-button">
           Get our Latest Album
         </Button>
+        <Container>
+          <Button
+            className="mt-4 rounded-circle btn-lg"
+            onClick={fetchMovieHandler}
+          >
+            Fetch
+          </Button>
+        </Container>
       </Container>
       <Container
         fluid
@@ -67,19 +60,22 @@ const HomePage = () => {
         <h1 className="mt-3">TOURS</h1>
       </Container>
       <Container>
-        {events.map((item) => (
+        {movies.map((movieData) => (
           <Row
             className="mt-0"
             style={{
               borderBottom: "1px solid grey",
               padding: "10px",
             }}
+            key={movieData.id}
           >
-            <Col>{item.date}</Col>
-            <Col>{item.location}</Col>
-            <Col>{item.venue}</Col>
+            <Col md="2">{movieData.title}</Col>
+            <Col md="1">{movieData.releaseDate}</Col>
+            <Col md="7">{movieData.openingCrawl}</Col>
             <Col>
-              <Button variant="primary">BUY TICKETS</Button>
+              <Button variant="primary" md="1">
+                BUY TICKETS
+              </Button>
             </Col>
           </Row>
         ))}

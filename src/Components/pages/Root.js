@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navigation from "../Nav/Navigation";
+import Footer from "../Footer/Footer";
 
 const RootLayout = () => {
   return (
@@ -20,6 +21,7 @@ const RootLayout = () => {
         <h1 className="display-1">The Generics</h1>
       </Container>
       <Outlet />
+      <Footer />
     </>
   );
 };
