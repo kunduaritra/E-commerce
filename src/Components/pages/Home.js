@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   async function fetchMovieHandler() {
+    setIsLoading(true);
     try {
       const response = await fetch("https://swapi.dev/api/films/");
       if (!response.ok) {
@@ -18,6 +20,7 @@ const HomePage = () => {
         };
       });
       setMovies(transformedMovies);
+      setIsLoading(false);
     } catch (error) {
       console.log("error--> ", error);
     }
@@ -60,25 +63,35 @@ const HomePage = () => {
         <h1 className="mt-3">TOURS</h1>
       </Container>
       <Container>
-        {movies.map((movieData) => (
-          <Row
-            className="mt-0"
-            style={{
-              borderBottom: "1px solid grey",
-              padding: "10px",
-            }}
-            key={movieData.id}
-          >
-            <Col md="2">{movieData.title}</Col>
-            <Col md="1">{movieData.releaseDate}</Col>
-            <Col md="7">{movieData.openingCrawl}</Col>
-            <Col>
-              <Button variant="primary" md="1">
-                BUY TICKETS
-              </Button>
-            </Col>
-          </Row>
-        ))}
+        {isLoading && (
+          <h5 className="text-center">
+            <i>Loading...</i>
+          </h5>
+        )}
+        {!isLoading && movies.length === 0 && (
+          <p className="text-center">No Records.</p>
+        )}
+        {!isLoading &&
+          movies.length > 0 &&
+          movies.map((movieData) => (
+            <Row
+              className="mt-0"
+              style={{
+                borderBottom: "1px solid grey",
+                padding: "10px",
+              }}
+              key={movieData.id}
+            >
+              <Col md="2">{movieData.title}</Col>
+              <Col md="1">{movieData.releaseDate}</Col>
+              <Col md="7">{movieData.openingCrawl}</Col>
+              <Col>
+                <Button variant="primary" md="1">
+                  BUY TICKETS
+                </Button>
+              </Col>
+            </Row>
+          ))}
       </Container>
     </>
   );
