@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
 const HomePage = () => {
@@ -9,11 +9,11 @@ const HomePage = () => {
   const [retryTimeout, setRetryTimeout] = useState(null);
   const maxRetryCount = 2;
 
-  async function fetchMovieHandler() {
+  const fetchMovieHandler = useCallback(async () =>{
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/fils/");
+      const response = await fetch("https://swapi.dev/api/films/");
       if (!response.ok) {
         throw new Error("Something went wrong... Retrying");
       }
@@ -39,7 +39,7 @@ const HomePage = () => {
       }
     }
     setIsLoading(false);
-  }
+  }, [retryCount]); 
 
   const cancelRetry = () => {
     if (retryTimeout) {
@@ -48,6 +48,10 @@ const HomePage = () => {
       setError(null);
     }
   };
+
+  useEffect(()=>{
+    fetchMovieHandler();
+  },[fetchMovieHandler])
 
   let content = <p className="text-center">No Records.</p>;
   if (movies.length > 0) {
