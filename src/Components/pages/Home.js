@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Container, Row, Col, Form } from "react-bootstrap";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -9,7 +9,7 @@ const HomePage = () => {
   const [retryTimeout, setRetryTimeout] = useState(null);
   const maxRetryCount = 2;
 
-  const fetchMovieHandler = useCallback(async () =>{
+  const fetchMovieHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -39,7 +39,7 @@ const HomePage = () => {
       }
     }
     setIsLoading(false);
-  }, [retryCount]); 
+  }, [retryCount]);
 
   const cancelRetry = () => {
     if (retryTimeout) {
@@ -49,9 +49,9 @@ const HomePage = () => {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchMovieHandler();
-  },[fetchMovieHandler])
+  }, [fetchMovieHandler]);
 
   let content = <p className="text-center">No Records.</p>;
   if (movies.length > 0) {
@@ -92,6 +92,20 @@ const HomePage = () => {
       </p>
     );
   }
+  const addNewMovieHandler = (event) => {
+    event.preventDefault();
+
+    let title = event.target.formTitle.value;
+    let openingText = event.target.formOpeningText.value;
+    let relsDate = event.target.formRelsDate.value;
+
+    const newMovieObj = {
+      title: title,
+      openingText: openingText,
+      relsDate: relsDate,
+    };
+    console.log(newMovieObj);
+  };
 
   return (
     <>
@@ -117,6 +131,38 @@ const HomePage = () => {
             Fetch
           </Button>
         </Container>
+      </Container>
+      <Container className="mt-4">
+        <Form onSubmit={addNewMovieHandler}>
+          <Form.Group className="mb-3" controlId="formTitle">
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              name="formTitle"
+              placeholder="Enter Title"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formOpeningText">
+            <Form.Label>Opening Text</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={4}
+              name="formOpeningText"
+              placeholder="Enter Opening Text"
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formReleaseDate">
+            <Form.Label>Release Date</Form.Label>
+            <Form.Control
+              type="date"
+              name="formRelsDate"
+              placeholder="Enter Release Date"
+            />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Add Movie
+          </Button>
+        </Form>
       </Container>
       <Container
         fluid
