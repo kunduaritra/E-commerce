@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Button, Container, Row, Col, Form } from "react-bootstrap";
+import { MdDelete } from "react-icons/md";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -13,18 +14,25 @@ const HomePage = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
+      const response = await fetch(
+        "https://react-project-ecommerce-4005b-default-rtdb.firebaseio.com/movies.json"
+      );
       if (!response.ok) {
         throw new Error("Something went wrong... Retrying");
       }
       const data = await response.json();
-      const transformedMovies = data.results.map((movieData) => ({
-        id: movieData.episode_id,
-        title: movieData.title,
-        openingCrawl: movieData.opening_crawl,
-        releaseDate: movieData.release_date,
-      }));
-      setMovies(transformedMovies);
+
+      const loadedMovies = [];
+
+      for (const key in data) {
+        loadedMovies.push({
+          id: key,
+          title: data[key].title,
+          openingCrawl: data[key].openingText,
+          releaseDate: data[key].relsDate,
+        });
+      }
+      setMovies(loadedMovies);
     } catch (error) {
       if (retryCount < maxRetryCount) {
         setRetryCount((prevCount) => prevCount + 1);
@@ -53,6 +61,24 @@ const HomePage = () => {
     fetchMovieHandler();
   }, [fetchMovieHandler]);
 
+  const removeMovieHandler = async (movieId) => {
+    console.log("clicked remove");
+    const url = `https://react-project-ecommerce-4005b-default-rtdb.firebaseio.com/movies/${movieId}.json`;
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete the movie!");
+      }
+      setMovies((prevMovies) =>
+        prevMovies.filter((movie) => movie.id !== movieId)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   let content = <p className="text-center">No Records.</p>;
   if (movies.length > 0) {
     content = movies.map((movieData) => (
@@ -66,10 +92,18 @@ const HomePage = () => {
       >
         <Col md="2">{movieData.title}</Col>
         <Col md="1">{movieData.releaseDate}</Col>
-        <Col md="7">{movieData.openingCrawl}</Col>
+        <Col md="6">{movieData.openingCrawl}</Col>
         <Col>
           <Button variant="primary" md="1">
             BUY TICKETS
+          </Button>
+          &nbsp;
+          <Button
+            variant="danger"
+            md="1"
+            onClick={() => removeMovieHandler(movieData.id)}
+          >
+            <MdDelete />
           </Button>
         </Col>
       </Row>
@@ -92,19 +126,35 @@ const HomePage = () => {
       </p>
     );
   }
-  const addNewMovieHandler = (event) => {
+  const addNewMovieHandler = async (event) => {
     event.preventDefault();
 
-    let title = event.target.formTitle.value;
-    let openingText = event.target.formOpeningText.value;
-    let relsDate = event.target.formRelsDate.value;
+    const title = event.target.formTitle.value;
+    const openingText = event.target.formOpeningText.value;
+    const relsDate = event.target.formRelsDate.value;
 
     const newMovieObj = {
       title: title,
       openingText: openingText,
       relsDate: relsDate,
     };
-    console.log(newMovieObj);
+
+    const response = await fetch(
+      "https://react-project-ecommerce-4005b-default-rtdb.firebaseio.com/movies.json",
+      {
+        method: "POST",
+        body: JSON.stringify(newMovieObj),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    setMovies((prevMovies) => [...prevMovies, newMovieObj]);
+    event.target.formTitle.value = "";
+    event.target.formOpeningText.value = "";
+    event.target.formRelsDate.value = "";
+    console.log(data);
   };
 
   return (
