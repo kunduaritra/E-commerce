@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Container, Navbar, Nav, Button } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import CartContext from "../../store/cart-context";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Navigation.css";
 
 const Navigation = (props) => {
@@ -29,14 +29,33 @@ const Navigation = (props) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-              <Link to="/home" className="me-5 hide">
+              <NavLink
+                to="/home"
+                activeClassName="active"
+                className="me-5 hide nav-link"
+              >
                 Home
-              </Link>
-              <Link to="/" className="me-5 hide">
+              </NavLink>
+              <Link
+                to="/"
+                activeClassName="active"
+                className="me-5 hide nav-link"
+              >
                 Store
               </Link>
-              <Link to="/about" className="hide">
+              <Link
+                to="/about"
+                activeClassName="active"
+                className="me-5 hide nav-link"
+              >
                 About
+              </Link>
+              <Link
+                to="/contactus"
+                activeClassName="active"
+                className="hide nav-link"
+              >
+                Contact Us
               </Link>
             </Nav>
           </Navbar.Collapse>
