@@ -2,6 +2,7 @@ import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import classes from "./Products.module.css";
 import { useContext } from "react";
 import CartContext from "../store/cart-context";
+import { Link } from "react-router-dom";
 
 const Product = () => {
   const cartCntx = useContext(CartContext);
@@ -32,7 +33,8 @@ const Product = () => {
     },
   ];
   const addItemToCarthandler = (item) => {
-    cartCntx.addItems(item);
+    cartCntx.addItem(item);
+    console.log("len ", cartCntx.items.length);
   };
 
   return (
@@ -46,11 +48,17 @@ const Product = () => {
                   <Card key={i} className={`mt-3 ${classes.styleborder1}`}>
                     <Card.Body className="d-flex flex-column align-items-center">
                       <h5 className="text-center">{product.title}</h5>
-                      <Card.Img
-                        variant="top"
-                        src={product.imageUrl}
-                        style={{ width: "200px", height: "200px" }}
-                      />
+                      <Link
+                        to={`products/${product.title}/${
+                          product.price
+                        }/${encodeURIComponent(product.imageUrl)}`}
+                      >
+                        <Card.Img
+                          variant="top"
+                          src={product.imageUrl}
+                          style={{ width: "200px", height: "200px" }}
+                        />
+                      </Link>
                       <div className="mt-2" style={{ display: "flex" }}>
                         <p className="mb-0 me-5">₹{product.price}</p>
                         <Button

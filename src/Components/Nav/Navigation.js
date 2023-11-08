@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Container, Navbar, Nav, Button } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import CartContext from "../../store/cart-context";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Navigation.css";
 
 const Navigation = (props) => {
@@ -24,6 +24,7 @@ const Navigation = (props) => {
           >
             Cart
             <sup className="text-white">{cartCntx.items.length}</sup>
+            {console.log(cartCntx)}
           </Button>
           {isCartVisible && <Cart />}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -36,27 +37,34 @@ const Navigation = (props) => {
               >
                 Home
               </NavLink>
-              <Link
+              <NavLink
                 to="/"
                 activeClassName="active"
                 className="me-5 hide nav-link"
               >
                 Store
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/about"
                 activeClassName="active"
                 className="me-5 hide nav-link"
               >
                 About
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="/contactus"
+                activeClassName="active"
+                className="me-5 hide nav-link"
+              >
+                Contact Us
+              </NavLink>
+              <NavLink
+                to="/products"
                 activeClassName="active"
                 className="hide nav-link"
               >
-                Contact Us
-              </Link>
+                Products
+              </NavLink>
             </Nav>
           </Navbar.Collapse>
         </Container>

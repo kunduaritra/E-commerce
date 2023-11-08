@@ -18,7 +18,6 @@ const StorePage = () => {
         <h1 className="mt-3 mb-20">Music</h1>
       </Container>
       <Product />
-      {/* <Footer /> */}
     </CartProvider>
   );
 };

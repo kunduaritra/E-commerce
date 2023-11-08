@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import CartContext from "./cart-context";
 
 const CartProvider = (props) => {
-  const [cartElements, setCartElements] = useState([]);
+  let [cartElements, setCartElements] = useState([]);
 
   const addItemsToCartHandler = (item) => {
-    const updateCartElements = [...cartElements, { ...item, quantity: 1 }];
-    setCartElements(updateCartElements);
+    cartElements = [...cartElements, { ...item, quantity: 1 }];
+    setCartElements(cartElements);
+    console.log(cartElements);
   };
 
   const removeItemsFromCartHandler = (id) => {
@@ -15,8 +16,8 @@ const CartProvider = (props) => {
 
   const cartContext = {
     items: cartElements,
-    addItems: addItemsToCartHandler,
-    removeItems: removeItemsFromCartHandler,
+    addItem: addItemsToCartHandler,
+    removeItem: removeItemsFromCartHandler,
   };
 
   return (

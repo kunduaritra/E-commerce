@@ -20,32 +20,40 @@ const ContactUsPage = () => {
     const email = event.target.email.value;
     const contactNo = event.target.contactno.value;
 
-    const contactFormObj = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      contactNo: contactNo,
-    };
+    if (
+      firstName !== "" &&
+      (lastName !== "") & (email !== "") & (contactNo !== "")
+    ) {
+      const contactFormObj = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        contactNo: contactNo,
+      };
 
-    const response = await fetch(
-      "https://react-project-ecommerce-4005b-default-rtdb.firebaseio.com/contactDetails.json",
-      {
-        method: "POST",
-        body: JSON.stringify(contactFormObj),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+      const response = await fetch(
+        "https://react-project-ecommerce-4005b-default-rtdb.firebaseio.com/contactDetails.json",
+        {
+          method: "POST",
+          body: JSON.stringify(contactFormObj),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const data = await response.json();
-    console.log(data);
+      const data = await response.json();
+      console.log(data);
 
-    setStatus(true);
-    event.target.fname.value = "";
-    event.target.lname.value = "";
-    event.target.email.value = "";
-    event.target.contactno.value = "";
+      setStatus(true);
+      event.target.fname.value = "";
+      event.target.lname.value = "";
+      event.target.email.value = "";
+      event.target.contactno.value = "";
+    } 
+    else {
+      <p>Enter all the details.</p>;
+    }
   };
 
   return (
