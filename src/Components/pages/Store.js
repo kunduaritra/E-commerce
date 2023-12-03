@@ -1,10 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Product from "../Product";
-import CartProvider from "../../store/CartProvider";
 
 const StorePage = () => {
   return (
-    <CartProvider>
+    <>
       <Container
         fluid
         style={{
@@ -18,7 +17,7 @@ const StorePage = () => {
         <h1 className="mt-3 mb-20">Music</h1>
       </Container>
       <Product />
-    </CartProvider>
+    </>
   );
 };
 

@@ -5,9 +5,26 @@ const CartProvider = (props) => {
   let [cartElements, setCartElements] = useState([]);
 
   const addItemsToCartHandler = (item) => {
-    cartElements = [...cartElements, { ...item, quantity: 1 }];
-    setCartElements(cartElements);
-    console.log(cartElements);
+    const isPresent = cartElements.find((elem) => elem.title === item.title);
+
+    if (isPresent) {
+      setCartElements((prevCartElements) =>
+        prevCartElements.map((elem) =>
+          elem.title === item.title
+            ? {
+                ...elem,
+                quantity: elem.quantity + 1,
+                price: elem.price + item.price,
+              }
+            : elem
+        )
+      );
+    } else {
+      setCartElements((prevCartElements) => [
+        ...prevCartElements,
+        { ...item, quantity: 1 },
+      ]);
+    }
   };
 
   const removeItemsFromCartHandler = (id) => {
@@ -22,6 +39,7 @@ const CartProvider = (props) => {
 
   return (
     <CartContext.Provider value={cartContext}>
+      {console.log("cartContext proviider ->", cartContext.items.length)}
       {props.children}
     </CartContext.Provider>
   );

@@ -13,6 +13,11 @@ const Navigation = (props) => {
     setIsCartVisible(!isCartVisible);
   };
 
+  let totalQuantity = 0;
+  cartCntx.items.forEach((elem) => {
+    totalQuantity = elem.quantity + totalQuantity;
+  });
+
   return (
     <>
       <Navbar bg="dark" expand="sm" variant="dark">
@@ -23,8 +28,7 @@ const Navigation = (props) => {
             onClick={toggleCart}
           >
             Cart
-            <sup className="text-white">{cartCntx.items.length}</sup>
-            {console.log(cartCntx)}
+            <sup className="text-white">{totalQuantity}</sup>
           </Button>
           {isCartVisible && <Cart />}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -32,35 +36,35 @@ const Navigation = (props) => {
             <Nav className="mx-auto">
               <NavLink
                 to="/home"
-                activeClassName="active"
+                activeclassname="active"
                 className="me-5 hide nav-link"
               >
                 Home
               </NavLink>
               <NavLink
                 to="/"
-                activeClassName="active"
+                activeclassname="active"
                 className="me-5 hide nav-link"
               >
                 Store
               </NavLink>
               <NavLink
                 to="/about"
-                activeClassName="active"
+                activeclassname="active"
                 className="me-5 hide nav-link"
               >
                 About
               </NavLink>
               <NavLink
                 to="/contactus"
-                activeClassName="active"
+                activeclassname="active"
                 className="me-5 hide nav-link"
               >
                 Contact Us
               </NavLink>
               <NavLink
                 to="/products"
-                activeClassName="active"
+                activeclassname="active"
                 className="hide nav-link"
               >
                 Products

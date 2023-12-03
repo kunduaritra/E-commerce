@@ -7,12 +7,13 @@ function Cart() {
   const cartCntx = useContext(CartContext);
   const [isCartVisible, setIsCartVisible] = useState(true);
 
-  const toggleCart = () => {
-    setIsCartVisible(false);
+  const toggleCart = (event) => {
+    setIsCartVisible(!isCartVisible);
   };
 
   return (
     <>
+      {console.log("in cart ", cartCntx)}
       {isCartVisible && (
         <Container className="cart-container mt-5">
           <div className="cart">
@@ -30,7 +31,6 @@ function Cart() {
             <h3 className="text-right">
               Grand Total: <small>₹100</small>
             </h3>
-            {console.log("cart cntx", cartCntx)}
             {cartCntx.items.map((item, index) => (
               <div key={index} className="cart-item">
                 <Row className="d-flex justify-content-center align-items-center mt-3 colStyle">

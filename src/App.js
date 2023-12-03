@@ -6,6 +6,7 @@ import HomePage from "./Components/pages/Home";
 import ContactUsPage from "./Components/pages/ContactUs";
 import ProductDetails from "./Components/pages/ProductDetails";
 import Products from "./Components/pages/Products";
+// import CartProvider from "./store/CartProvider";
 
 const router = createBrowserRouter([
   {
@@ -16,11 +17,11 @@ const router = createBrowserRouter([
       { path: "/about", element: <AboutPage /> },
       { path: "/", element: <StorePage /> },
       { path: "/contactus", element: <ContactUsPage /> },
+      { path: "/products", element: <Products /> },
       {
         path: "products/:productId/:price/:imgUrl",
         element: <ProductDetails />,
       },
-      { path: "/products", element: <Products /> },
     ],
   },
 ]);
