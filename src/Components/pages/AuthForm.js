@@ -4,7 +4,6 @@ import AuthContext from "../../store/auth-context";
 import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
-  //   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -34,7 +33,7 @@ const AuthForm = () => {
       .then((res) => {
         setIsLoading(false);
         if (res.ok) {
-          navigate("/");
+          navigate("/"); // not working
           return res.json();
         } else {
           return res.json().then((data) => {
