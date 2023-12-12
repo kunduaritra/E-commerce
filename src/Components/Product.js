@@ -34,7 +34,6 @@ const Product = () => {
   ];
   const addItemToCarthandler = (item) => {
     cartCntx.addItem(item);
-    console.log("cntx", cartCntx);
   };
 
   return (

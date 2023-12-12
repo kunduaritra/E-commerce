@@ -46,7 +46,8 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        authCntx.login(data.idToken);
+        authCntx.login(data.idToken, data.email);
+        localStorage.setItem("LoggedUser", data.email);
       })
       .catch((err) => {
         alert(err.message);

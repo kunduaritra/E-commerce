@@ -1,34 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartContext from "./cart-context";
 
 const CartProvider = (props) => {
-  let [cartElements, setCartElements] = useState([]);
+  const url = "https://crudcrud.com/api/89ea3b4aa28a44979c54724e0df77cf8";
+  const [cartElements, setCartElements] = useState([]);
 
-  const addItemsToCartHandler = (item) => {
-    const isPresent = cartElements.find((elem) => elem.title === item.title);
+  const fetchItemsFromServer = async () => {
+    const email = localStorage.getItem("LoggedUser");
 
-    if (isPresent) {
-      setCartElements((prevCartElements) =>
-        prevCartElements.map((elem) =>
-          elem.title === item.title
-            ? {
-                ...elem,
-                quantity: elem.quantity + 1,
-                price: elem.price + item.price,
-              }
-            : elem
-        )
-      );
-    } else {
-      setCartElements((prevCartElements) => [
-        ...prevCartElements,
-        { ...item, quantity: 1 },
-      ]);
+    if (!email) {
+      console.error("The 'LoggedUser' key does not exist in the localStorage.");
+      return;
     }
+
+    const updatedEmail = email.replace(/[@.]/g, "");
+    const response = await fetch(`${url}/cart${updatedEmail}`);
+    const data = await response.json();
+    setCartElements(data);
   };
 
-  const removeItemsFromCartHandler = (id) => {
-    // Implement
+  useEffect(() => {
+    fetchItemsFromServer();
+  }, []);
+
+  const addItemsToCartHandler = async (item) => {
+    const email = localStorage.getItem("LoggedUser");
+    const updatedEmail = email.replace(/[@.]/g, "");
+
+    fetch(`${url}/cart${updatedEmail}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...item, quantity: 1 }),
+    });
+
+    fetchItemsFromServer();
+  };
+
+  const removeItemsFromCartHandler = async (id) => {
+    fetch(`${url}/cart${id}`, {
+      method: "DELETE",
+    });
+
+    fetchItemsFromServer();
   };
 
   const cartContext = {

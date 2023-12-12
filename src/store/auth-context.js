@@ -19,12 +19,14 @@ export const AuthContextProvider = (props) => {
     setTimeout(() => {
       setToken(null);
       localStorage.removeItem("token");
+      localStorage.removeItem("LoggedUser");
     }, 50000);
   };
 
   const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("LoggedUser");
   };
 
   const contextValue = {
