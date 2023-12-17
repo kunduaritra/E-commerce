@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartContext from "./cart-context";
 
 const CartProvider = (props) => {
-  const url = "https://crudcrud.com/api/89ea3b4aa28a44979c54724e0df77cf8";
+  const url = "https://crudcrud.com/api/72342bd6fad04fa3b66030d72027afe0";
   const [cartElements, setCartElements] = useState([]);
 
   const fetchItemsFromServer = async () => {
@@ -37,11 +37,20 @@ const CartProvider = (props) => {
   };
 
   const removeItemsFromCartHandler = async (id) => {
-    fetch(`${url}/cart${id}`, {
-      method: "DELETE",
-    });
+    try {
+      const email = localStorage.getItem("LoggedUser");
+      const updatedEmail = email.replace(/[@.]/g, "");
 
-    fetchItemsFromServer();
+      const response = await fetch(`${url}/cart${updatedEmail}/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("went wrong");
+      }
+      fetchItemsFromServer();
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const cartContext = {
