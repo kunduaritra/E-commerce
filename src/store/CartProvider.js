@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import CartContext from "./cart-context";
 
 const CartProvider = (props) => {
-  const url = "https://crudcrud.com/api/72342bd6fad04fa3b66030d72027afe0";
+  const url =
+    "https://react-project-ecommerce-4005b-default-rtdb.firebaseio.com";
   const [cartElements, setCartElements] = useState([]);
 
   const fetchItemsFromServer = async () => {
@@ -14,9 +15,15 @@ const CartProvider = (props) => {
     }
 
     const updatedEmail = email.replace(/[@.]/g, "");
-    const response = await fetch(`${url}/cart${updatedEmail}`);
+    const response = await fetch(`${url}/cart/cart${updatedEmail}.json`);
     const data = await response.json();
-    setCartElements(data);
+    if (data) {
+      const itemArray = Object.entries(data).map(([id, item]) => ({
+        id,
+        ...item,
+      }));
+      setCartElements(itemArray);
+    }
   };
 
   useEffect(() => {
@@ -27,7 +34,7 @@ const CartProvider = (props) => {
     const email = localStorage.getItem("LoggedUser");
     const updatedEmail = email.replace(/[@.]/g, "");
 
-    fetch(`${url}/cart${updatedEmail}`, {
+    fetch(`${url}/cart/cart${updatedEmail}.json`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...item, quantity: 1 }),
@@ -41,9 +48,12 @@ const CartProvider = (props) => {
       const email = localStorage.getItem("LoggedUser");
       const updatedEmail = email.replace(/[@.]/g, "");
 
-      const response = await fetch(`${url}/cart${updatedEmail}/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${url}/cart/cart${updatedEmail}/${id}.json`,
+        {
+          method: "DELETE",
+        }
+      );
       if (!response.ok) {
         throw new Error("went wrong");
       }

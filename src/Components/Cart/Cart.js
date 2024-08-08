@@ -8,9 +8,14 @@ const Cart = () => {
   const handleClose = () => setShow(false);
   const cartCntx = useContext(CartContext);
 
+  let totalPrice = 0;
+  cartCntx.items &&
+    Object.values(cartCntx.items).forEach((item) => {
+      totalPrice += item.price * item.quantity;
+    });
+
   return (
     <>
-      {console.log(cartCntx)}
       {show && (
         <Offcanvas show={show} onHide={handleClose}>
           <Offcanvas.Header closeButton>
@@ -19,46 +24,48 @@ const Cart = () => {
           <Offcanvas.Body>
             <hr />
             <h3>
-              Grand Total: <small>₹100</small>
+              Grand Total: <small>₹{totalPrice}</small>
             </h3>
-            {cartCntx.items.map((item, index) => (
-              <div key={index} className="cart-item">
-                <Row className="d-flex justify-content-center align-items-center mt-3 colStyle">
-                  <Col>
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title}
-                      className="cart-item-image"
-                      width="50px"
-                      height="50px"
-                    />
-                  </Col>
-                  <Col>
-                    <div className="cart-item-details">
-                      <p>Price: ₹{item.price}</p>
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="cart-item-details">
-                      <p>Quantity: {item.quantity}</p>
-                    </div>
-                  </Col>
-                  <Col>
-                    <div className="cart-item-details">
-                      <Button
-                        className="btn-sm"
-                        variant="outline-danger"
-                        onClick={() => {
-                          cartCntx.removeItem(item._id);
-                        }}
-                      >
-                        -
-                      </Button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            ))}
+            {console.log(cartCntx.items)}
+            {cartCntx.items &&
+              Object.values(cartCntx.items).map((item, id) => (
+                <div key={id} className="cart-item">
+                  <Row className="d-flex justify-content-center align-items-center mt-3 colStyle">
+                    <Col>
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        className="cart-item-image"
+                        width="50px"
+                        height="50px"
+                      />
+                    </Col>
+                    <Col>
+                      <div className="cart-item-details">
+                        <p>Price: ₹{item.price}</p>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="cart-item-details">
+                        <p>Quantity: {item.quantity}</p>
+                      </div>
+                    </Col>
+                    <Col>
+                      <div className="cart-item-details">
+                        <Button
+                          className="btn-sm"
+                          variant="outline-danger"
+                          onClick={() => {
+                            cartCntx.removeItem(item.id);
+                          }}
+                        >
+                          -
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              ))}
           </Offcanvas.Body>
         </Offcanvas>
       )}

@@ -71,6 +71,9 @@ const AuthForm = () => {
             ref={passwordInputRef}
           />
         </div>
+        <label className="text-white" htmlFor="test">
+          Username: test@test.com / Password: 111000
+        </label>
         <div className={classes.actions}>
           {!isLoading && (
             <button type="submit" className={classes.actions}>

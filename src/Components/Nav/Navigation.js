@@ -23,9 +23,11 @@ const Navigation = (props) => {
   };
 
   let totalQuantity = 0;
-  cartCntx.items.forEach((elem) => {
-    totalQuantity = elem.quantity + totalQuantity;
-  });
+  if (cartCntx.items !== null) {
+    Object.values(cartCntx.items).forEach((elem) => {
+      totalQuantity += elem.quantity;
+    });
+  }
 
   return (
     <>
@@ -42,7 +44,6 @@ const Navigation = (props) => {
             </Button>
           )}
           {isCartVisible && <Cart />}
-          {console.log(isCartVisible)}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
